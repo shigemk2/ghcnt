@@ -50,13 +50,21 @@ func main() {
 	dec := json.NewDecoder(resp.Body)
 	var d []data
 	dec.Decode(&d)
+	var count = 0
 	for _, value := range d {
-		fmt.Printf("%+v\n", value.CreatedAt)
+		// 日付文字列パース
+		fmt.Printf("%s\n", value.CreatedAt)
 		var ts = strings.Replace(value.CreatedAt, "T", " ", 1)
 		ts = strings.Replace(ts, "Z", " UTC", 1)
-		t, _ := time.Parse("2006-01-02 15:04:05 MST", "2015-05-08 15:29:59 UTC")
+		// JST置換
+		t, _ := time.Parse("2006-01-02 15:04:05 MST", ts)
 		jst := time.FixedZone("Asia/Tokyo", 9*60*60)
 		tJst := t.In(jst)
-		fmt.Println(tJst.Format(time.RFC3339))
+		// 日付比較
+		nowJst := time.Now()
+		if (tJst.Format("2006-01-02") == nowJst.Format("2006-01-02")) {
+			count += 1
+		}
 	}
+	fmt.Println(count)
 }
