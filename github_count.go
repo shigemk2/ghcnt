@@ -10,8 +10,12 @@ import (
 func main() {
 	url := "https://api.github.com/users/shigemk2/events"
 
-	resp, _ := http.Get(url)
+	req, _ := http.NewRequest("GET", url, nil)
+
+	client := new(http.Client)
+	resp, _ := client.Do(req)
 	defer resp.Body.Close()
+
 
 	byteArray, _ := ioutil.ReadAll(resp.Body)
 	fmt.Println(string(byteArray))
