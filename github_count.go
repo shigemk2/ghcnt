@@ -1,41 +1,41 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
-	"encoding/json"
 )
 
 type actor struct {
-    Id   int
-    Login  string
-    GravatarId string
-    Url string
-    AvatarUrl string
+	Id         int
+	Login      string
+	GravatarId string
+	Url        string
+	AvatarUrl  string
 }
 
 type repo struct {
-    Id   int
-    Name string
-    Url string `json:"url"`
+	Id   int
+	Name string
+	Url  string `json:"url"`
 }
 
 type payload struct {
-    Ref   string
-    RefType  string
-    MasterBranch string
-    Description string
-    PusherType string
+	Ref          string
+	RefType      string
+	MasterBranch string
+	Description  string
+	PusherType   string
 }
 
 type data struct {
-    Id      string `json:"id"`
-    Type      string `json:"type"`
-    Actor      actor `json:"actor"`
-    Repo      repo `json:"repo"`
-    PayLoad      payload `json:"payload"`
-    Public       string `json:"public"`
-    CreatedAt      string `json:"created_at"`
+	Id        string  `json:"id"`
+	Type      string  `json:"type"`
+	Actor     actor   `json:"actor"`
+	Repo      repo    `json:"repo"`
+	PayLoad   payload `json:"payload"`
+	Public    string  `json:"public"`
+	CreatedAt string  `json:"created_at"`
 }
 
 func main() {
