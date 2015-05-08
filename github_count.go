@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"io/ioutil"
+	// "encoding/json"
 )
 
 
@@ -18,5 +19,6 @@ func main() {
 
 
 	byteArray, _ := ioutil.ReadAll(resp.Body)
-	fmt.Println(string(byteArray))
+	fmt.Println(byteArray)
+	// fmt.Println(string(byteArray))
 }
