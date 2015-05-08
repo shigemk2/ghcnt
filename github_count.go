@@ -53,7 +53,6 @@ func main() {
 	var count = 0
 	for _, value := range d {
 		// 日付文字列パース
-		fmt.Printf("%s\n", value.CreatedAt)
 		var ts = strings.Replace(value.CreatedAt, "T", " ", 1)
 		ts = strings.Replace(ts, "Z", " UTC", 1)
 		// JST置換
