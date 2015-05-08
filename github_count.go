@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"time"
 	"strings"
+	"time"
 )
 
 type actor struct {
@@ -23,11 +23,20 @@ type repo struct {
 }
 
 type payload struct {
+	PushId       int
+	Size         int
+	DistinctSize int
 	Ref          string
-	RefType      string
-	MasterBranch string
-	Description  string
-	PusherType   string
+	Head         string
+	Before       string
+	Commits      []commits
+}
+
+type commits struct {
+	Sha      string
+	Message  string
+	Distinct string
+	Url      string
 }
 
 type data struct {
@@ -51,9 +60,9 @@ func main() {
 	var d []data
 	dec.Decode(&d)
 	var count = 0
-	for _, value := range d {
+	for _, json := range d {
 		// 日付文字列パース
-		var ts = strings.Replace(value.CreatedAt, "T", " ", 1)
+		var ts = strings.Replace(json.CreatedAt, "T", " ", 1)
 		ts = strings.Replace(ts, "Z", " UTC", 1)
 		// JST置換
 		t, _ := time.Parse("2006-01-02 15:04:05 MST", ts)
@@ -61,8 +70,9 @@ func main() {
 		tJst := t.In(jst)
 		// 日付比較
 		nowJst := time.Now()
-		if (tJst.Format("2006-01-02") == nowJst.Format("2006-01-02")) {
-			count += 1
+		if tJst.Format("2006-01-02") == nowJst.Format("2006-01-02") &&
+			json.Type == "PushEvent" {
+			count += len(json.PayLoad.Commits)
 		}
 	}
 	fmt.Println(count)
