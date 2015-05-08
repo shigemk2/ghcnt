@@ -54,5 +54,7 @@ func main() {
 	var ts = strings.Replace(d[0].CreatedAt, "T", " ", 1)
 	ts = strings.Replace(ts, "Z", " UTC", 1)
 	t, _ := time.Parse("2006-01-02 15:04:05 MST", "2015-05-08 15:29:59 UTC")
-	fmt.Println(t)
+	jst := time.FixedZone("Asia/Tokyo", 9*60*60)
+	tJst := t.In(jst)
+	fmt.Println(tJst.Format(time.RFC3339))
 }
