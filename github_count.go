@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
+	"strings"
 )
 
 type actor struct {
@@ -49,4 +51,8 @@ func main() {
 	var d []data
 	dec.Decode(&d)
 	fmt.Printf("%+v\n", d[0].CreatedAt)
+	var ts = strings.Replace(d[0].CreatedAt, "T", " ", 1)
+	ts = strings.Replace(ts, "Z", " UTC", 1)
+	t, _ := time.Parse("2006-01-02 15:04:05 MST", "2015-05-08 15:29:59 UTC")
+	fmt.Println(t)
 }
