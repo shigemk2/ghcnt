@@ -1,2 +1,5 @@
 install:
-	go build -o /usr/local/bin/github_count github_count.go
+	go build -o /usr/local/bin/ghcnt github_count.go
+
+uninstall:
+	rm /usr/local/bin/ghcnt
